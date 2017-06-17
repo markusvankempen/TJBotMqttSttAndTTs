@@ -1,0 +1,1072 @@
+[
+    {
+        "id": "f76083bf.cbc47",
+        "type": "ibmiot out",
+        "z": "b27c87e2.32333",
+        "authentication": "boundService",
+        "apiKey": "",
+        "outputType": "cmd",
+        "deviceId": "tjbot",
+        "deviceType": "tjbot",
+        "eventCommandType": "turnRight",
+        "format": "json",
+        "data": "temp:10",
+        "qos": "",
+        "name": "Send CMD to TJBot",
+        "service": "registered",
+        "x": 562,
+        "y": 105.71429443359375,
+        "wires": []
+    },
+    {
+        "id": "891e6d81.6cfde8",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 102,
+        "y": 105.71429443359375,
+        "wires": [
+            [
+                "70e1aae0.fd4c3c"
+            ]
+        ]
+    },
+    {
+        "id": "70e1aae0.fd4c3c",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "ArmBACK",
+        "func": "\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"armBACK\",  \n          \"motorSpin\": 500, // Range is 500 to 20000\n          \"counter\" : counter1\n\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"armBACK\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 296,
+        "y": 107.71429443359375,
+        "wires": [
+            [
+                "f76083bf.cbc47",
+                "2a296744.f51b78"
+            ]
+        ]
+    },
+    {
+        "id": "2a296744.f51b78",
+        "type": "debug",
+        "z": "b27c87e2.32333",
+        "name": "totj",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 537.5556030273438,
+        "y": 357.9365539550781,
+        "wires": []
+    },
+    {
+        "id": "a4898d6.536097",
+        "type": "comment",
+        "z": "b27c87e2.32333",
+        "name": "1. Configure target",
+        "info": "",
+        "x": 552,
+        "y": 65.71429443359375,
+        "wires": []
+    },
+    {
+        "id": "4af02422.87a6c4",
+        "type": "comment",
+        "z": "b27c87e2.32333",
+        "name": "2. Control TJ",
+        "info": "",
+        "x": 80,
+        "y": 64.71429443359375,
+        "wires": []
+    },
+    {
+        "id": "ce72b8f5.ccb9e8",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "ArmForward",
+        "func": "\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"armFORWARD\",  \n          \"motorSpin\": 2000, // Range is 500 to 20000\n\n          \"counter\" : counter1\n\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"armFORWARD\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 286.77777099609375,
+        "y": 152.9365234375,
+        "wires": [
+            [
+                "2a296744.f51b78",
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "52e891e8.076118",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 93.77777099609375,
+        "y": 152.9365234375,
+        "wires": [
+            [
+                "ce72b8f5.ccb9e8"
+            ]
+        ]
+    },
+    {
+        "id": "1d0967d8.9a29c",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "ArmWAVE",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"armWAVE\",  \n          \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"armWAVE\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 281,
+        "y": 245.047607421875,
+        "wires": [
+            [
+                "f76083bf.cbc47",
+                "2a296744.f51b78"
+            ]
+        ]
+    },
+    {
+        "id": "d4769502.2d0e28",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 94,
+        "y": 245.047607421875,
+        "wires": [
+            [
+                "1d0967d8.9a29c"
+            ]
+        ]
+    },
+    {
+        "id": "9873def1.aa426",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "LEDOn",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nvar msg = {\n  payload: \n    {\n      d:{\n        \"action\"  : \"ledON\", \n        \"color\"   : 0x000000, //GRB\n        \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledON\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 269.77777099609375,
+        "y": 440.047607421875,
+        "wires": [
+            [
+                "2a296744.f51b78",
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "4784b6f9.fc61",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 88.77777099609375,
+        "y": 440.047607421875,
+        "wires": [
+            [
+                "9873def1.aa426"
+            ]
+        ]
+    },
+    {
+        "id": "1f735b98.39b26c",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "LEDOff",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 9) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n        \"action\" : \"ledOff\", \n         \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledOFF\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 266.22222900390625,
+        "y": 482.6031494140625,
+        "wires": [
+            [
+                "2a296744.f51b78",
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "564779d3.f9df1",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 85.22222900390625,
+        "y": 482.6031494140625,
+        "wires": [
+            [
+                "1f735b98.39b26c"
+            ]
+        ]
+    },
+    {
+        "id": "4b3c034d.ac27bc",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "LEDRed",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload:\n    {\n      d:{\n        \"action\" : \"ledRED\", \n        \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledRED\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 280,
+        "y": 562.7142944335938,
+        "wires": [
+            [
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "1adf1666.cea5ca",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 99,
+        "y": 562.7142944335938,
+        "wires": [
+            [
+                "4b3c034d.ac27bc"
+            ]
+        ]
+    },
+    {
+        "id": "f373570f.5c62c8",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "LEDBlue",
+        "func": "\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nvar msg = {\n  payload: \n    {\n      d:{\n        \"action\" : \"ledBLUE\", \n       \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledBLUE\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 273,
+        "y": 616.7142944335938,
+        "wires": [
+            [
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "894d9f1d.93da48",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 92,
+        "y": 616.7142944335938,
+        "wires": [
+            [
+                "f373570f.5c62c8"
+            ]
+        ]
+    },
+    {
+        "id": "1fa97e37.3ad27a",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "LEDGreen",
+        "func": "// Thermostat's location:\nvar longitude1 = -98.49;\nvar latitude1 = 29.42;\n\n// Array of pseudo random temperatures\nvar temp1 = [15,17,18.5,20,21.5,23,24,22.2,19,18];\n\n// Array of pseudo random relative humidities\nvar humidity1 = [50,55,61,68,65,60,53,49,45,47];\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n        \"action\" : \"ledGREEN\", \n             \"counter\" : counter1\n        // not use old for testing\n  // //   \"increment\": 0,\n       // \"interval\": 250,\n    //    \"stopat\": 1501,\n      //  \"motorSpin\": 1800,\n        //\"turn\" : 500,\n//        \"temp\" : temp1[counter1],\n  //      \"humidity\" : humidity1[counter1],\n    //    \"location\" :\n      //  {\n        //  \"longitude\" : longitude1,\n         // \"latitude\" : latitude1\n    //    },\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledGREEN\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 276,
+        "y": 674.7142944335938,
+        "wires": [
+            [
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "47d5d4d.8c5f9ac",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 85,
+        "y": 674.7142944335938,
+        "wires": [
+            [
+                "1fa97e37.3ad27a"
+            ]
+        ]
+    },
+    {
+        "id": "c433315b.b8f558",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "ArmMove500",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nvar msg = {\n  payload:  //JSON.stringify(\n    {\n      d:{\n        \"action\" : \"armMove\", \n        \"motorSpin\": 500, // Range is 500 to 2000\n        \"counter\" : counter1\n      }\n    }\n\n};\nmsg.eventOrCommandType = \"armMove\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 277,
+        "y": 337.71429443359375,
+        "wires": [
+            [
+                "2a296744.f51b78",
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "2826324e.61fede",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 85,
+        "y": 336.71429443359375,
+        "wires": [
+            [
+                "c433315b.b8f558"
+            ]
+        ]
+    },
+    {
+        "id": "f177ecf1.0387b",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "ArmMove2000",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nvar msg = {\n  payload:  //JSON.stringify(\n    {\n      d:{\n        \"action\" : \"armMove\", \n        \"motorSpin\": 2000, // Range is 500 to 2000\n          \"counter\" : counter1\n      }\n    }\n\n};\nmsg.eventOrCommandType = \"armMove\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 277.2222595214844,
+        "y": 373.2698669433594,
+        "wires": [
+            [
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "c333df68.29ed58",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 82.77780151367188,
+        "y": 368.8254089355469,
+        "wires": [
+            [
+                "f177ecf1.0387b"
+            ]
+        ]
+    },
+    {
+        "id": "58ac6db1.26e90c",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "LEDSetColorYellow",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nvar msg = {\n  payload:\n    {\n      d:{\n        \"action\" : \"ledSET\", \n        \"color\"  : 0xFFFF00, //GRB //yellow\n        \"value\"  : \"yellow\",\n        \"counter\": counter1\n        }\n      }\n    \n  \n};\nmsg.eventOrCommandType = \"ledSET\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 301.66668701171875,
+        "y": 727.7142944335938,
+        "wires": [
+            [
+                "f76083bf.cbc47",
+                "2a296744.f51b78"
+            ]
+        ]
+    },
+    {
+        "id": "51d348f8.0be9f",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 74.00003051757812,
+        "y": 727.7142944335938,
+        "wires": [
+            [
+                "58ac6db1.26e90c"
+            ]
+        ]
+    },
+    {
+        "id": "a06c19b8.6d54d8",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "ArmUP",
+        "func": "\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"armUP\",  \n          \"motorSpin\": 1500, // Range is 500 to 20000\n\n          \"counter\" : counter1\n\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"armUP\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 268.3333740234375,
+        "y": 193.26983642578125,
+        "wires": [
+            [
+                "f76083bf.cbc47"
+            ]
+        ]
+    },
+    {
+        "id": "d15d1d25.c95098",
+        "type": "inject",
+        "z": "b27c87e2.32333",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 85.3333740234375,
+        "y": 193.26983642578125,
+        "wires": [
+            [
+                "a06c19b8.6d54d8"
+            ]
+        ]
+    },
+    {
+        "id": "f7b05e9.65d6f2",
+        "type": "ibmiot in",
+        "z": "b27c87e2.32333",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "FromTJ",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": true,
+        "qos": 0,
+        "x": 780.357177734375,
+        "y": 110.25,
+        "wires": [
+            [
+                "cd249c2c.b3a258",
+                "ae1aa017.0168f8"
+            ]
+        ]
+    },
+    {
+        "id": "cd249c2c.b3a258",
+        "type": "debug",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 950.357177734375,
+        "y": 110.5,
+        "wires": []
+    },
+    {
+        "id": "ae1aa017.0168f8",
+        "type": "switch",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "dht",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "tjlisten",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 785.0794677734375,
+        "y": 184.10317993164062,
+        "wires": [
+            [
+                "abf6641a.f4389"
+            ],
+            [],
+            [
+                "4e904064.55401"
+            ]
+        ]
+    },
+    {
+        "id": "abf6641a.f4389",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "TemperatureHumidity",
+        "func": "msg.temperature = msg.payload.temperature;\nmsg.humidity = msg.payload.humidity;\nmsg.led =  msg.payload.led;\nmsg.arm =  msg.payload.arm;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 981.0316162109375,
+        "y": 182.11904907226562,
+        "wires": [
+            [
+                "f991841b.85068",
+                "b59e536d.f21768",
+                "be8367a.9e18318",
+                "cdf6eb6d.a22b38",
+                "6ae948ea.3e2fd",
+                "c53b7863.30d398",
+                "5f865365.ef3d9c",
+                "826acefb.0bc06"
+            ]
+        ]
+    },
+    {
+        "id": "f991841b.85068",
+        "type": "debug",
+        "z": "b27c87e2.32333",
+        "name": "temperature",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 1008.6112060546875,
+        "y": 236.8612060546875,
+        "wires": []
+    },
+    {
+        "id": "4e904064.55401",
+        "type": "debug",
+        "z": "b27c87e2.32333",
+        "name": "otherFromTJ",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 782.3017578125,
+        "y": 234.69845581054688,
+        "wires": []
+    },
+    {
+        "id": "4a939f61.52e3e",
+        "type": "ui_button",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "20412603.5a6afa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Wave Arm",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "wave",
+        "payloadType": "str",
+        "topic": "",
+        "x": 102.95651245117188,
+        "y": 840.3135375976562,
+        "wires": [
+            [
+                "1d0967d8.9a29c"
+            ]
+        ]
+    },
+    {
+        "id": "6ae948ea.3e2fd",
+        "type": "ui_text",
+        "z": "b27c87e2.32333",
+        "group": "67a13739.6a3e6",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Led",
+        "format": "{{msg.led}}",
+        "layout": "row-spread",
+        "x": 1364.7421875,
+        "y": 294.9364929199219,
+        "wires": []
+    },
+    {
+        "id": "cdf6eb6d.a22b38",
+        "type": "ui_text",
+        "z": "b27c87e2.32333",
+        "group": "67a13739.6a3e6",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Arm",
+        "format": "{{msg.arm}}",
+        "layout": "row-spread",
+        "x": 1370.853271484375,
+        "y": 334.9365539550781,
+        "wires": []
+    },
+    {
+        "id": "be8367a.9e18318",
+        "type": "ui_text",
+        "z": "b27c87e2.32333",
+        "group": "67a13739.6a3e6",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperature",
+        "format": "{{msg.temperature}}",
+        "layout": "row-spread",
+        "x": 1393.0755615234375,
+        "y": 380.4920959472656,
+        "wires": []
+    },
+    {
+        "id": "b59e536d.f21768",
+        "type": "ui_text",
+        "z": "b27c87e2.32333",
+        "group": "67a13739.6a3e6",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Humidity",
+        "format": "{{msg.humidity}}",
+        "layout": "row-spread",
+        "x": 1390.853271484375,
+        "y": 443.825439453125,
+        "wires": []
+    },
+    {
+        "id": "56346d16.7a260c",
+        "type": "ui_gauge",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "cd1bae11.c88f4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "60",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1366.6075575086807,
+        "y": 178.9444342719184,
+        "wires": []
+    },
+    {
+        "id": "8824ab19.6e437",
+        "type": "ui_chart",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "cd1bae11.c88f4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "x": 1367.302001953125,
+        "y": 231.72219848632812,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c53b7863.30d398",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "Temperature",
+        "func": "msg.payload = msg.payload.temperature;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1199.107177734375,
+        "y": 174.5,
+        "wires": [
+            [
+                "8824ab19.6e437",
+                "56346d16.7a260c",
+                "ce43bb2a.dcfcb8"
+            ]
+        ]
+    },
+    {
+        "id": "d1e016cc.314618",
+        "type": "comment",
+        "z": "b27c87e2.32333",
+        "name": "Dashboard",
+        "info": "",
+        "x": 1351.25,
+        "y": 74.85713958740234,
+        "wires": []
+    },
+    {
+        "id": "7a23fb8f.52f2b4",
+        "type": "ui_button",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "20412603.5a6afa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Led Off",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "off",
+        "payloadType": "str",
+        "topic": "",
+        "x": 97.85714721679688,
+        "y": 887.7141723632812,
+        "wires": [
+            [
+                "1f735b98.39b26c"
+            ]
+        ]
+    },
+    {
+        "id": "bc15bf9.0145c4",
+        "type": "ui_button",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "20412603.5a6afa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Led Red",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "red",
+        "payloadType": "str",
+        "topic": "",
+        "x": 95,
+        "y": 932,
+        "wires": [
+            [
+                "4b3c034d.ac27bc"
+            ]
+        ]
+    },
+    {
+        "id": "d8e77080.38e98",
+        "type": "ui_button",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "20412603.5a6afa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Arm backwards",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "Back",
+        "payloadType": "str",
+        "topic": "",
+        "x": 103.57144165039062,
+        "y": 790.5714111328125,
+        "wires": [
+            [
+                "70e1aae0.fd4c3c"
+            ]
+        ]
+    },
+    {
+        "id": "ce43bb2a.dcfcb8",
+        "type": "debug",
+        "z": "b27c87e2.32333",
+        "name": "temperature",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 1385,
+        "y": 130.57144165039062,
+        "wires": []
+    },
+    {
+        "id": "b5b583e6.c4ac4",
+        "type": "ui_template",
+        "z": "b27c87e2.32333",
+        "group": "67a13739.6a3e6",
+        "name": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n#circle {\n      width: 50px;\n      height: 50px;\n      -webkit-border-radius: 25px;\n      -moz-border-radius: 25px;\n      border-radius: 25px;\n      background: {{msg.payload}};\n    }\n</style>    \nLED:    <div id=\"circle\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "x": 1297.142822265625,
+        "y": 566.2857055664062,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5f865365.ef3d9c",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "Led",
+        "func": "msg.payload = msg.payload.led;\nif ( msg.payload == 'on')\n    msg.payload = \"white\"\nif ( msg.payload == 'off')\n    msg.payload = \"black\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1092.142822265625,
+        "y": 567.71435546875,
+        "wires": [
+            [
+                "b5b583e6.c4ac4",
+                "6eddff0e.486af8"
+            ]
+        ]
+    },
+    {
+        "id": "726ca183.a9dbc8",
+        "type": "ui_gauge",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "67a13739.6a3e6",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "TJ Arm",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "180",
+        "colors": [
+            "#9f0205",
+            "#e4232a",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1440.7142333984375,
+        "y": 637.71435546875,
+        "wires": []
+    },
+    {
+        "id": "826acefb.0bc06",
+        "type": "function",
+        "z": "b27c87e2.32333",
+        "name": "TJArm",
+        "func": "msg.payload = msg.payload.arm;\nif(msg.payload == \"raised\")\n{    flow.set(\"wave\",true);\n    msg.payload = 80\n}\nif(msg.payload == \"lower\")\n{    flow.set(\"wave\",true);\n    msg.payload = 0\n}\nif(msg.payload == \"back\")\n{    flow.set(\"wave\",true);\n    msg.payload = 180\n}    \nif(msg.payload == \"wave\")\n{\n    if(flow.get(\"wave\"))\n    {\n        msg.payload = 180\n        node.send(msg);\n        msg.payload = 0\n        node.send(msg);\n        msg.payload = 80\n        flow.set(\"wave\",false);\n    }    \n       msg.payload = 80\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1082.1430053710938,
+        "y": 646.2857666015625,
+        "wires": [
+            [
+                "50f9fe28.56688"
+            ]
+        ]
+    },
+    {
+        "id": "50f9fe28.56688",
+        "type": "delay",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1258.5714111328125,
+        "y": 644.5000610351562,
+        "wires": [
+            [
+                "726ca183.a9dbc8"
+            ]
+        ]
+    },
+    {
+        "id": "52f6fc92.757a94",
+        "type": "ui_button",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "20412603.5a6afa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Arm UP",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "Raise",
+        "payloadType": "str",
+        "topic": "",
+        "x": 65,
+        "y": 986.2857055664062,
+        "wires": [
+            [
+                "a06c19b8.6d54d8"
+            ]
+        ]
+    },
+    {
+        "id": "6eddff0e.486af8",
+        "type": "debug",
+        "z": "b27c87e2.32333",
+        "name": "temperature",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1267.857177734375,
+        "y": 513.4285888671875,
+        "wires": []
+    },
+    {
+        "id": "87a740c8.11b718",
+        "type": "ui_button",
+        "z": "b27c87e2.32333",
+        "name": "",
+        "group": "20412603.5a6afa",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Led Green",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "Green",
+        "payloadType": "str",
+        "topic": "",
+        "x": 282.1428527832031,
+        "y": 936.2857666015625,
+        "wires": [
+            [
+                "1fa97e37.3ad27a"
+            ]
+        ]
+    },
+    {
+        "id": "20412603.5a6afa",
+        "type": "ui_group",
+        "z": "",
+        "name": "TJ Actions",
+        "tab": "837decce.13237",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "67a13739.6a3e6",
+        "type": "ui_group",
+        "z": "",
+        "name": "TJ Status 5Sec Delay",
+        "tab": "837decce.13237",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "cd1bae11.c88f4",
+        "type": "ui_group",
+        "z": "",
+        "name": "DHT22/11 Temperature",
+        "tab": "837decce.13237",
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "837decce.13237",
+        "type": "ui_tab",
+        "z": "",
+        "name": "TJRemote",
+        "icon": "dashboard",
+        "order": "1"
+    }
+]
