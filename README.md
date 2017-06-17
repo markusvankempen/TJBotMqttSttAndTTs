@@ -1,7 +1,10 @@
+## Basic setup instructions video
+#### go through these steps 1stplease -  https://youtu.be/vLW-JrafW30
+
 ## No 2 - Sending SpeechtoText via TJBoT to Watson IoT Platform and TTS to TJ
 #### Short Video: https://youtu.be/sGN4iGKDHOM
 #### Code https://github.com/markusvankempen/TJBotMqttSttAndTTs
-#
+
 ### Clone repo
 #### npm install in TJBotMqttSttAndTTs
 #### install node-iot/ibmiotf in the TJBotMqttSttAndTTs directory via
