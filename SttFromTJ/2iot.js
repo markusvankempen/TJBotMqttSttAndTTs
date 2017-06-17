@@ -8,7 +8,7 @@ TJ servo motor and led
 version 20170613 
 Note: Stand alone MQTT control no need for Conversion of TJBot Lib
 **********************************************************************/
-var iotf = require("./");
+var iotf = require("../iot-nodejs/.");
 var config = require("./device.json");
 //var ws281x = require('rpi-ws281x-native');
 var rpiDhtSensor = require('rpi-dht-sensor');
