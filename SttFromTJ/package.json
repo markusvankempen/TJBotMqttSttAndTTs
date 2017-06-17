@@ -1,0 +1,31 @@
+{
+        "name": "TJBotMqttSttAndTTs",
+        "version": "0.1.01",
+        "description": "Using TJ libs to control TJBOT",
+        
+        "dependencies": {
+                "axios": "^0.5.4",
+                "bluebird": "^2.9.34",
+                "btoa": "^1.1.2",
+                "events": "^1.0.2",
+                "format": "^0.2.1",
+                "loglevel": "1.4.0",
+                "mqtt": "1.5.0",
+                "pigpio": "^0.6.0",
+                "rpi-ws281x-native": "^0.8.2",
+                "rpi-dht-sensor":"*",
+                "tjbot":"*"                
+
+        },
+      
+        "author": {
+                "name": "Markus van Kempen",
+                "email": "mvk@ca.ibm.com"
+        },
+      
+        "repository": {
+                "type": "git",
+                "url": "git+https://github.com/markusvankempen/TJBotMQTT.git"
+        },
+        "license": "EPL-1.0"
+}
