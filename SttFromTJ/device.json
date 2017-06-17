@@ -1,0 +1,9 @@
+
+{
+  "org": "YOURS",
+  "domain": "internetofthings.ibmcloud.com",
+  "type": "tjbot",
+  "id": "tjbot",
+  "auth-method" : "token",
+  "auth-token" : "YOURS"
+}
