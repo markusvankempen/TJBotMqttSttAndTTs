@@ -1,0 +1,536 @@
+[
+    {
+        "id": "abf4b32c.262f",
+        "type": "ibmiot in",
+        "z": "aa2770eb.801128",
+        "authentication": "boundService",
+        "apiKey": "",
+        "inputType": "evt",
+        "deviceId": "",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "FromTJ",
+        "service": "registered",
+        "allDevices": true,
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": true,
+        "qos": 0,
+        "x": 112.85714721679688,
+        "y": 74.28571319580078,
+        "wires": [
+            [
+                "4a35d58.5911eac",
+                "ec2de174.67c9e"
+            ]
+        ]
+    },
+    {
+        "id": "4a35d58.5911eac",
+        "type": "debug",
+        "z": "aa2770eb.801128",
+        "name": "",
+        "active": false,
+        "console": "false",
+        "complete": "false",
+        "x": 293.96826171875,
+        "y": 75.64679718017578,
+        "wires": []
+    },
+    {
+        "id": "ec2de174.67c9e",
+        "type": "switch",
+        "z": "aa2770eb.801128",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "dht",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "tjlisten",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 3,
+        "x": 118.27386474609375,
+        "y": 178.8135757446289,
+        "wires": [
+            [
+                "935f6fd2.2eb1f8"
+            ],
+            [
+                "36bef6eb.9e6f1a"
+            ],
+            [
+                "77a5ac7.7aa6ad4"
+            ]
+        ]
+    },
+    {
+        "id": "935f6fd2.2eb1f8",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "TemperatureHumidity",
+        "func": "msg.temperature = msg.payload.temperature;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 334.94036865234375,
+        "y": 163.25800323486328,
+        "wires": [
+            [
+                "e2ae9236.1cc1e"
+            ]
+        ]
+    },
+    {
+        "id": "e2ae9236.1cc1e",
+        "type": "debug",
+        "z": "aa2770eb.801128",
+        "name": "temperature",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 542.1627807617188,
+        "y": 163.5358657836914,
+        "wires": []
+    },
+    {
+        "id": "36bef6eb.9e6f1a",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "wordsFromTJ",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 317.71832275390625,
+        "y": 206.8691177368164,
+        "wires": [
+            [
+                "6a51483a.08aa5",
+                "81c8cecb.4728c8"
+            ]
+        ]
+    },
+    {
+        "id": "6a51483a.08aa5",
+        "type": "debug",
+        "z": "aa2770eb.801128",
+        "name": "STTfromTJ",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 548.8294067382812,
+        "y": 206.86917877197266,
+        "wires": []
+    },
+    {
+        "id": "77a5ac7.7aa6ad4",
+        "type": "debug",
+        "z": "aa2770eb.801128",
+        "name": "otherFromTJ",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 135.49615478515625,
+        "y": 257.98026275634766,
+        "wires": []
+    },
+    {
+        "id": "81c8cecb.4728c8",
+        "type": "switch",
+        "z": "aa2770eb.801128",
+        "name": "Simple Check colors",
+        "property": "payload.words",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "red",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "blue",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "green",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "right",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "off",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 6,
+        "x": 333.82928466796875,
+        "y": 332.14688873291016,
+        "wires": [
+            [
+                "7cab11b7.b9c9a8"
+            ],
+            [
+                "12a1cb22.45de45"
+            ],
+            [
+                "a85ffd8d.2a95e8",
+                "2165948f.90ed64"
+            ],
+            [
+                "7cab11b7.b9c9a8"
+            ],
+            [
+                "47acf549.d082d4",
+                "c70eaef0.821dc"
+            ],
+            [
+                "149ede06.6a163a"
+            ]
+        ]
+    },
+    {
+        "id": "149ede06.6a163a",
+        "type": "debug",
+        "z": "aa2770eb.801128",
+        "name": "otherFromTJ",
+        "active": false,
+        "console": "false",
+        "complete": "payload",
+        "x": 295.49603271484375,
+        "y": 413.53580474853516,
+        "wires": []
+    },
+    {
+        "id": "a6c1b15.588dc5",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "ConfirmWithVoice",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"tjSPEAK\",  \n          \"counter\" : counter1,\n          \"words\": \"Ok i turned the light green\"\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"tjSPEAK\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 843.96826171875,
+        "y": 396.31360626220703,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "fb8ddbc3.c32ea",
+        "type": "ibmiot out",
+        "z": "aa2770eb.801128",
+        "authentication": "boundService",
+        "apiKey": "",
+        "outputType": "cmd",
+        "deviceId": "tjbot",
+        "deviceType": "tjbot",
+        "eventCommandType": "turnRight",
+        "format": "json",
+        "data": "temp:10",
+        "qos": "",
+        "name": "Send CMD to TJBot",
+        "service": "registered",
+        "x": 1303.3294067382812,
+        "y": 245.4246063232422,
+        "wires": []
+    },
+    {
+        "id": "7cab11b7.b9c9a8",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "LEDRed",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload:\n    {\n      d:{\n        \"action\" : \"ledRED\", \n        \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledRED\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1013.5516357421875,
+        "y": 219.09119415283203,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "a46a5818.e64bb8",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 832.5516357421875,
+        "y": 219.09119415283203,
+        "wires": [
+            [
+                "7cab11b7.b9c9a8"
+            ]
+        ]
+    },
+    {
+        "id": "12a1cb22.45de45",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "LEDBlue",
+        "func": "\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nvar msg = {\n  payload: \n    {\n      d:{\n        \"action\" : \"ledBLUE\", \n       \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledBLUE\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1006.5516357421875,
+        "y": 273.09119415283203,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "4be138ed.00cde8",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 825.5516357421875,
+        "y": 273.09119415283203,
+        "wires": [
+            [
+                "12a1cb22.45de45"
+            ]
+        ]
+    },
+    {
+        "id": "a85ffd8d.2a95e8",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "LEDGreen",
+        "func": "// Thermostat's location:\nvar longitude1 = -98.49;\nvar latitude1 = 29.42;\n\n// Array of pseudo random temperatures\nvar temp1 = [15,17,18.5,20,21.5,23,24,22.2,19,18];\n\n// Array of pseudo random relative humidities\nvar humidity1 = [50,55,61,68,65,60,53,49,45,47];\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n        \"action\" : \"ledGREEN\", \n             \"counter\" : counter1\n        // not use old for testing\n  // //   \"increment\": 0,\n       // \"interval\": 250,\n    //    \"stopat\": 1501,\n      //  \"motorSpin\": 1800,\n        //\"turn\" : 500,\n//        \"temp\" : temp1[counter1],\n  //      \"humidity\" : humidity1[counter1],\n    //    \"location\" :\n      //  {\n        //  \"longitude\" : longitude1,\n         // \"latitude\" : latitude1\n    //    },\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledGREEN\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1009.5516357421875,
+        "y": 331.09119415283203,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "f69bfcbd.0643d",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 818.5516357421875,
+        "y": 331.09119415283203,
+        "wires": [
+            [
+                "a85ffd8d.2a95e8"
+            ]
+        ]
+    },
+    {
+        "id": "9a195b7b.b19b68",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "tjSpeak",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"tjSPEAK\",  \n          \"counter\" : counter1,\n          \"words\": \"Hello there!\"\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"tjSPEAK\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1013.4961547851562,
+        "y": 163.4245376586914,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "3efde272.63223e",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 817.6072692871094,
+        "y": 162.31342315673828,
+        "wires": [
+            [
+                "9a195b7b.b19b68"
+            ]
+        ]
+    },
+    {
+        "id": "67f832fd.80df3c",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "TestData",
+        "topic": "",
+        "payload": "{\"words\": \"Set the light green.\", \"botname\": \"Watson\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 117.91265869140625,
+        "y": 331.81348419189453,
+        "wires": [
+            [
+                "81c8cecb.4728c8"
+            ]
+        ]
+    },
+    {
+        "id": "2165948f.90ed64",
+        "type": "debug",
+        "z": "aa2770eb.801128",
+        "name": "SetLighGreen",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 836.126953125,
+        "y": 488.7777404785156,
+        "wires": []
+    },
+    {
+        "id": "a2cdc1ba.6dd938",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "tjSpeak",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"tjSPEAK\",  \n          \"counter\" : counter1,\n          \"words\": \"Hello World!\"\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"tjSPEAK\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 999.5198364257812,
+        "y": 536.992073059082,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "e23f2807.654d38",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 822.5198364257812,
+        "y": 536.992073059082,
+        "wires": [
+            [
+                "a2cdc1ba.6dd938"
+            ]
+        ]
+    },
+    {
+        "id": "c70eaef0.821dc",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "LEDOff",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 9) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n        \"action\" : \"ledOff\", \n         \"counter\" : counter1\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"ledOFF\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1005.71435546875,
+        "y": 87.14286041259766,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "8b7e6ff3.283ef8",
+        "type": "inject",
+        "z": "aa2770eb.801128",
+        "name": "Send Data",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 824.71435546875,
+        "y": 87.14286041259766,
+        "wires": [
+            [
+                "c70eaef0.821dc"
+            ]
+        ]
+    },
+    {
+        "id": "2c217275.9090a6",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "ConfirmWithVoice",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"tjSPEAK\",  \n          \"counter\" : counter1,\n          \"words\": \"Ok i turned the light blue\"\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"tjSPEAK\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 840,
+        "y": 432.8571472167969,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    },
+    {
+        "id": "47acf549.d082d4",
+        "type": "function",
+        "z": "aa2770eb.801128",
+        "name": "ConfirmWithVoice",
+        "func": "\n// Counter to select from array.\nvar counter1 = context.get('counter1')||0;\ncounter1 = counter1+1;\nif(counter1 > 999) counter1 = 0;\ncontext.set('counter1',counter1);\n\n// Create MQTT message in JSON\nmsg = {\n  payload: \n    {\n      d:{\n          \"action\" : \"tjSPEAK\",  \n          \"counter\" : counter1,\n          \"words\": \"Ok i turned the light off\"\n      }\n    }\n  \n};\nmsg.eventOrCommandType = \"tjSPEAK\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1002.857177734375,
+        "y": 121.4285659790039,
+        "wires": [
+            [
+                "fb8ddbc3.c32ea"
+            ]
+        ]
+    }
+]
