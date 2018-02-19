@@ -1,0 +1,267 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+	  Ask TJBOT 
+	</title>
+
+  </head>
+  <body>
+	<link rel="stylesheet"
+        type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <div class="container">
+      <div id="no-script"class="bg-info">
+        THIS APP works only in CHROME desktop with js enabled!
+      </div>
+      <div id="id_contextdump"></div>
+
+      <h3>TJBot in Chrome : Hotword is "Watson" <br>Say Watson, what's the time</h3>
+      <div id=id_botchathistory>
+	  </div>
+	  start:<img alt="Start" onclick="keepgoing =true; recognition.start();" id="start_img">
+	  stop:<img alt="Stop" onclick=" keepgoing =false; recognition.stop();" id="stop_img">
+	  <div>
+	      
+            <label for="id_chattext">Your Input: </label>
+            <input type="text" name="chattext" id="id_chattext">
+               <button onclick="javascript:onChatClick()">Send</button>
+            <br>
+            <div id="text">Connecting... to ws/audio</div>
+            <audio id="output"></audio>
+
+	  </div>
+	  Note: Its contantly lisiting unless "Watson stop" is detected or the stop button is clicked.
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    
+    var socketaddy = "wss://" + window.location.host + "/ws/tjaudio";
+    var myevent="";
+  var     keepgoing = true;
+  var starttime =0;
+   var text = document.getElementById('id_chattext')
+   var ipaddr;
+    $(document).ready(function(){
+        // $.getJSON("https://jsonip.com/?callback=?", function (data) {
+      //  console.log(data);
+        //alert(data.ip);
+         ipaddr ="192.168.0.1";// data.ip;// 192.168.0.1
+//    });
+        console.log("Websocket start : "+myevent); 
+        text.value = "Hi";
+    // onChatClick();
+ start_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+stop_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic-slash.gif"
+           recognition.start();
+          javascriptCheck();
+          	$('#id_contextdump').hide();
+        
+    $("#id_chattext").keyup(function(event){
+    if(event.keyCode == 13){
+        console.log("got a return")
+       onChatClick();
+    }
+});    
+          	
+          var output = document.getElementById('output')
+      $('#output').on('playing', function () {
+          $('#text').text('Watson talking events. \n Event: '+myevent )
+          
+      });
+      $('#output').on('ended', function () {
+          $('#text').text('Watson waiting for audio...')
+          //window.location.reload();
+             keepgoing=true;
+             recognition.start(); 
+          
+      });
+      sock = new WebSocket(socketaddy);
+      sock.onopen = function(){
+          $('#text').text('Waiting for audio...');
+          console.log("Connected websocket");
+      };
+      sock.onerror = function(){ 
+          console.log("Websocket error"); 
+      };
+      sock.onclose = function () {
+          $('#text').text('Not connected. Refresh the page?')
+          window.location.reload();
+          
+      }
+      sock.onmessage = function(evt){
+             keepgoing=false;
+             recognition.stop(); 
+             start_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+
+        console.log("Got Websocket message: "); 
+    
+        output.src = window.URL.createObjectURL(evt.data);
+        output.play();
+      };	
+          	
+          	
+          	
+      });
+
+      // if javascript is enabled on the browser then can
+      // remove the warning message
+      function javascriptCheck() {
+        $('#no-script').remove();
+      }
+      
+      function createNewDiv(who, message) {
+        console.log('002-001');  
+        var txt = who + ' : ' + message;
+        return $('<div></div>').text(txt);
+      }
+
+      function chat(person, txt) {
+        $('#id_botchathistory').append(createNewDiv(person, txt));
+      }    
+      
+      function processOK(response) {
+        console.log('Got Post Response'+" time "+(Date.now()-starttime));
+       console.log(response);
+    //    console.log(response.botresponse.messageout);
+       // console.log(response.botresponse.messageout.output.text);
+        console.log(response.botresponse.messageout.context);
+        chat('Bot', response.botresponse.messageout.output.text); 
+        $('#id_contextdump').data('convContext', response.botresponse.messageout.context);
+      }
+      
+      function processNotOK() {
+        chat('Error', 'Error whilst attempting to talk to Bot');
+      }
+      
+      function invokeAjax(message) {
+        var contextdata = $('#id_contextdump').data('convContext');
+    //    console.log('checking stashed context data');
+       console.log("Start Posting time "+(Date.now()-starttime));
+  
+        //var ajaxData = "msgdata=" + message;
+        var ajaxData = {};
+        ajaxData.msgdata = message;
+        ajaxData.user= ipaddr;
+          ajaxData.ipaddr= ipaddr;
+        if (contextdata) {
+          ajaxData.context = contextdata;    
+        }
+
+        $.ajax({
+          type: 'POST',
+          url: '/tjchat',
+          data: ajaxData,
+          success: processOK,
+          error: processNotOK
+        });
+      }
+          
+      // User has entered some text.
+      function onChatClick() {
+        console.log('001-001');
+        var txt = $('#id_chattext').val();
+        if (txt == "")
+        return;
+        
+        chat('You', txt); 
+        invokeAjax(txt);
+        console.log('001-002');
+         $('#id_chattext').val("");
+      }
+      
+
+var hotword = "tj";     
+var hotword1 = "dude"; 
+var hotword2 = "watson"; 
+var stopwords = "tj stop";  
+var stopword2 = "watson stop";  
+ var final_transcript ="";     
+     
+ var recognition = new webkitSpeechRecognition();
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  recognition.onstart = function() {
+    recognizing = false;
+   console.log("recognition.onstart");
+    start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+ 
+  };    
+  recognition.onerror = function(event) {  
+      start_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+
+      console.log("speech Error "+event);
+  }
+  
+    recognition.onend = function() {
+          start_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+
+    console.log("speech onend");
+    if (  keepgoing)
+      recognition.start();
+    }
+    
+    recognition.onnomatch = function() {
+        console.log('Speech not recognised');
+    }
+
+    
+ recognition.onresult = function(event) {
+    var interim_transcript = '';
+  
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+      if (event.results[i].isFinal &&  keepgoing) {
+        final_transcript = event.results[i][0].transcript;
+      console.log("hotword1 = " +hotword1+" res = "+final_transcript.toLowerCase().indexOf(hotword1))
+        
+        if (final_transcript.toLowerCase().indexOf(hotword) >= 0 || final_transcript.toLowerCase().indexOf(hotword1) >= 0 || final_transcript.toLowerCase().indexOf(hotword2) >= 0)
+        {
+          console.log("Got the Hotword final "+" time "+(Date.now()-starttime));
+         
+           
+               final_transcript = final_transcript.toLowerCase().replace(hotword, ""); 
+                final_transcript = final_transcript.toLowerCase().replace(hotword1, ""); 
+                final_transcript = final_transcript.toLowerCase().replace(hotword2, ""); 
+                 text.value = final_transcript;
+              console.log("Final = "+ final_transcript);
+            onChatClick();
+            
+        }    
+  final_transcript ="";
+  
+  start_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+      } else {
+  console.log("interim_transcript = "+ event.results[i][0].transcript+" time "+Date.now())
+  
+        if (final_transcript.toLowerCase().indexOf(hotword) >= 0 || final_transcript.toLowerCase().indexOf(hotword1) >= 0 || final_transcript.toLowerCase().indexOf(hotword2) >= 0)
+       
+        {
+          starttime =     Date.now();
+          console.log("Got the Hotword interim "+ event.results[i][0].transcript);
+         start_img.src = 'https://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+        }  
+        interim_transcript += event.results[i][0].transcript;
+        
+        if (interim_transcript.toLowerCase().indexOf(stopwords) >= 0 || interim_transcript.toLowerCase().indexOf(stopword2) >= 0)
+        {
+            console.log("Got the stopwords "+interim_transcript);
+            keepgoing=false;
+              recognition.stop(); 
+              start_img.src = "https://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+
+        }    
+        
+      }
+    }
+ }
+    
+    </script>
+  </body>
+</html>
